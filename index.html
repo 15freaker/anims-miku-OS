@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miku-OS</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+    <!-- OS Boot Screen Overlay -->
+    <div id="boot-screen">
+        <div class="boot-box">
+            <div class="boot-header">
+                <span>Miku-OS Kernel v1.0.0 (tty1)</span>
+                <span class="status-indicator">BOOTING</span>
+            </div>
+            <div class="boot-content">
+                <div class="boot-gif-container">
+                    <img alt="Miku Boot" class="miku-gif" />
+                </div>
+                <div class="boot-terminal" id="boot-terminal"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Desktop Workspace -->
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <span class="os-title">Miku-OS</span>
+        </div>
+        <div class="top-bar-right">
+            <span id="date"></span>
+            <span id="time"></span>
+        </div>
+    </header>
+
+    <main class="desktop" id="desktop">
+        <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+    </main>
+
+    <footer class="bottom-bar">
+        <!-- Minimized windows dock on the left side -->
+        <div class="minimized-tray left-tray" id="leftTray"></div>
+
+        <div class="radial-dock-container" id="radialContainer">
+            <button class="dock-item app-launcher-btn" id="appsLauncher">
+                <img id="apps-logo" alt="Apps" class="apps-icon-img" />
+            </button>
+            
+            <div class="radial-menu" id="radialMenu">
+                <button class="dock-item radial-item" data-app="finder" style="--angle: -135deg; --distance: 100px;">Finder</button>
+                <button class="dock-item radial-item" data-app="terminal" style="--angle: -90deg; --distance: 100px;">Terminal</button>
+                <button class="dock-item radial-item" data-app="settings" style="--angle: -45deg; --distance: 100px;">Settings</button>
+                <button class="dock-item radial-item" id="change-bg-btn" style="--angle: 0deg; --distance: 110px;">Wallpaper</button>
+            </div>
+        </div>
+
+        <!-- Minimized windows dock on the right side -->
+        <div class="minimized-tray right-tray" id="rightTray"></div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
