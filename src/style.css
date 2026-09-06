@@ -514,3 +514,148 @@ body {
 }
 
 .note-card-footer { display: flex; justify-content: flex-end; }
+/* Wikipedia App Styles */
+.wiki-app {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+}
+
+.wiki-header {
+    display: flex;
+    gap: 8px;
+}
+
+.wiki-header input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #fff;
+    outline: none;
+}
+
+.wiki-header button, .wiki-back-btn {
+    background: #00f3ff;
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.wiki-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.wiki-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13px;
+}
+
+.wiki-results {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wiki-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.wiki-card:hover {
+    background: rgba(0, 243, 255, 0.1);
+    border-color: #00f3ff;
+}
+
+.wiki-card h3 {
+    font-size: 14px;
+    color: #00f3ff;
+    margin-bottom: 4px;
+}
+
+.wiki-card p {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.wiki-article {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wiki-thumb {
+    max-width: 180px;
+    border-radius: 6px;
+}
+
+.wiki-extract {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+.wiki-link {
+    color: #00f3ff;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+/* Google App Styles */
+.google-app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 8px;
+}
+
+.browser-nav {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.browser-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.go-btn { background: #00f3ff; color: #000; font-weight: bold; border: none; }
+
+.browser-nav input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: #00f3ff;
+    font-family: monospace;
+    font-size: 12px;
+    outline: none;
+}
+
+#googleFrame {
+    width: 100%;
+    flex-grow: 1;
+    border-radius: 6px;
+    background: #fff;
+}

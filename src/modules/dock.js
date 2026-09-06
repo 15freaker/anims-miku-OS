@@ -1,6 +1,8 @@
 import { openWindow } from './windowManager.js';
 import { openCalculator } from './apps/calculator.js';
 import { openNotesApp } from './apps/notes.js';
+import { openWikipediaApp } from './apps/wikipedia.js';
+import { openGoogleApp } from './apps/google.js';
 import appsLogoPath from '../assets/apps-miku-button.jpg';
 
 export function initDock() {
@@ -15,7 +17,11 @@ export function initDock() {
         item.addEventListener('click', () => {
             const appType = item.getAttribute('data-app');
 
-            if (appType === 'calculator') {
+            if (appType === 'wikipedia') {
+                openWikipediaApp();
+            } else if (appType === 'google') {
+                openGoogleApp();
+            } else if (appType === 'calculator') {
                 openCalculator();
             } else if (appType === 'notes') {
                 openNotesApp();
