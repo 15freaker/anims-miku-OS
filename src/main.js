@@ -2,6 +2,7 @@ import { runBootSequence } from './modules/boot.js';
 import { initClock } from './modules/clock.js';
 import { initWallpaper } from './modules/wallpaper.js';
 import { initDock } from './modules/dock.js';
+import { initWidgets } from './modules/widgets.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Run boot sequence first
@@ -11,4 +12,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     initClock();
     initWallpaper();
     initDock();
+    initWidgets();
 });

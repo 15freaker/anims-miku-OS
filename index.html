@@ -37,6 +37,37 @@
 
     <main class="desktop" id="desktop">
         <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+
+        <!-- Hover Widgets Dock (Weather & Calendar) -->
+        <div class="hover-dock">
+            <div class="hover-widget weather-trigger">
+                <div class="widget-badge" id="weatherBadge">🌤️ --°C</div>
+                <div class="popup-window">
+                    <div class="popup-header">
+                        <h3>Current Weather</h3>
+                        <span class="location">Patna, Bihar</span>
+                    </div>
+                    <div class="weather-body">
+                        <div class="temp-display" id="weatherTemp">--°C</div>
+                        <div class="condition" id="weatherCondition">Syncing...</div>
+                        <div class="details">
+                            <div id="weatherHumidity">Humidity: --%</div>
+                            <div id="weatherWind">Wind: -- km/h</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hover-widget calendar-trigger">
+                <div class="widget-badge" id="calendarBadge">📅 Today</div>
+                <div class="popup-window">
+                    <div class="popup-header">
+                        <h3 id="cal-month-year">Calendar</h3>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="bottom-bar">
