@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miku-OS</title>
+  <script type="module" crossorigin src="/anims-miku-OS/assets/index-CGpJgeiD.js"></script>
+  <link rel="stylesheet" crossorigin href="/anims-miku-OS/assets/index-DHO_rMS4.css">
+</head>
+<body>
+
+    <!-- OS Boot Screen Overlay -->
+    <div id="boot-screen">
+        <div class="boot-box">
+            <div class="boot-header">
+                <span>Miku-OS Kernel v1.0.0 (tty1)</span>
+                <span class="status-indicator">BOOTING</span>
+            </div>
+            <div class="boot-content">
+                <div class="boot-gif-container">
+                    <img alt="Miku Boot" class="miku-gif" />
+                </div>
+                <div class="boot-terminal" id="boot-terminal"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Desktop Workspace -->
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <span class="os-title">Miku-OS</span>
+        </div>
+        <div class="top-bar-right">
+            <span id="date"></span>
+            <span id="time"></span>
+        </div>
+    </header>
+
+    <main class="desktop" id="desktop">
+        <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+
+        <!-- Hover Widgets Dock (Weather & Calendar) -->
+        <div class="hover-dock">
+            <div class="hover-widget weather-trigger">
+                <div class="widget-badge" id="weatherBadge">🌤️ --°C</div>
+                <div class="popup-window">
+                    <div class="popup-header">
+                        <h3>Current Weather</h3>
+                        <span class="location">Patna, Bihar</span>
+                    </div>
+                    <div class="weather-body">
+                        <div class="temp-display" id="weatherTemp">--°C</div>
+                        <div class="condition" id="weatherCondition">Syncing...</div>
+                        <div class="details">
+                            <div id="weatherHumidity">Humidity: --%</div>
+                            <div id="weatherWind">Wind: -- km/h</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hover-widget calendar-trigger">
+                <div class="widget-badge" id="calendarBadge">📅 Today</div>
+                <div class="popup-window">
+                    <div class="popup-header">
+                        <h3 id="cal-month-year">Calendar</h3>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bottom-bar">
+        <div class="minimized-tray left-tray" id="leftTray"></div>
+
+        <div class="radial-dock-container" id="radialContainer">
+            <button class="dock-item app-launcher-btn" id="appsLauncher">
+                <img id="apps-logo" alt="Apps" class="apps-icon-img" />
+            </button>
+            
+            <div class="radial-menu" id="radialMenu">
+                <button class="dock-item radial-item" data-app="google" style="--angle: -160deg; --distance: 110px;">Google</button>
+                <button class="dock-item radial-item" data-app="wikipedia" style="--angle: -120deg; --distance: 110px;">Wikipedia</button>
+                <button class="dock-item radial-item" data-app="calculator" style="--angle: -80deg; --distance: 110px;">Calculator</button>
+                <button class="dock-item radial-item" data-app="notes" style="--angle: -40deg; --distance: 110px;">Notes</button>
+                <button class="dock-item radial-item" data-app="finder" style="--angle: 0deg; --distance: 110px;">Finder</button>
+                <button class="dock-item radial-item" data-app="terminal" style="--angle: 40deg; --distance: 110px;">Terminal</button>
+            </div>
+        </div>
+
+        <div class="minimized-tray right-tray" id="rightTray"></div>
+    </footer>
+
+</body>
+</html>
