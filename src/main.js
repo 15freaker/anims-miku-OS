@@ -5,10 +5,17 @@ import { initDock } from './modules/dock.js';
 import { initWidgets } from './modules/widgets.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Run boot sequence first
+    const osElements = document.querySelectorAll('.top-bar, .desktop, .bottom-bar');
+    osElements.forEach(el => {
+        el.style.display = 'none';
+    });
+
     await runBootSequence();
 
-    // Initialize OS components
+    osElements.forEach(el => {
+        el.style.display = '';
+    });
+
     initClock();
     initWallpaper();
     initDock();

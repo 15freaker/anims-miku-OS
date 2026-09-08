@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- OS Boot Screen Overlay -->
     <div id="boot-screen">
         <div class="boot-box">
             <div class="boot-header">
@@ -24,8 +23,7 @@
         </div>
     </div>
 
-    <!-- Main Desktop Workspace -->
-    <header class="top-bar">
+    <header class="top-bar os-ui-hidden" id="topBar">
         <div class="top-bar-left">
             <span class="os-title">Miku-OS</span>
         </div>
@@ -35,11 +33,35 @@
         </div>
     </header>
 
-    <main class="desktop" id="desktop">
+    <main class="desktop os-ui-hidden" id="desktop">
         <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+    </main>
 
-        <!-- Hover Widgets Dock (Weather & Calendar) -->
-        <div class="hover-dock">
+    <footer class="bottom-bar os-ui-hidden" id="bottomBar">
+        <div class="mac-dock-container">
+            <div class="mac-dock" id="macDock">
+                <button class="dock-app" data-app="google" data-title="Google">
+                    <img src="./src/assets/icons/google.png" alt="Google" class="app-icon-img" />
+                </button>
+                <button class="dock-app" data-app="wikipedia" data-title="Wikipedia">
+                    <img src="./src/assets/icons/wikipedia.png" alt="Wikipedia" class="app-icon-img" />
+                </button>
+                <button class="dock-app" data-app="calculator" data-title="Calculator">
+                    <img src="./src/assets/icons/calculator.png" alt="Calculator" class="app-icon-img" />
+                </button>
+                <button class="dock-app" data-app="notes" data-title="Notes">
+                    <img src="./src/assets/icons/notes.png" alt="Notes" class="app-icon-img" />
+                </button>
+                <button class="dock-app" data-app="miku-folder" data-title="miku-folder">
+                    <img src="./src/assets/icons/miku-folder.png" alt="miku-folder" class="app-icon-img" />
+                </button>
+                <button class="dock-app" data-app="terminal" data-title="Terminal">
+                    <img src="./src/assets/icons/terminal.png" alt="Terminal" class="app-icon-img" />
+                </button>
+            </div>
+        </div>
+
+        <div class="widgets-corner">
             <div class="hover-widget weather-trigger">
                 <div class="widget-badge" id="weatherBadge">🌤️ --°C</div>
                 <div class="popup-window">
@@ -60,35 +82,16 @@
 
             <div class="hover-widget calendar-trigger">
                 <div class="widget-badge" id="calendarBadge">📅 Today</div>
-                <div class="popup-window">
-                    <div class="popup-header">
+                <div class="popup-window cal-popup">
+                    <div class="popup-header cal-header">
+                        <button id="cal-prev">&lt;</button>
                         <h3 id="cal-month-year">Calendar</h3>
+                        <button id="cal-next">&gt;</button>
                     </div>
                     <div class="calendar-grid" id="calendar-grid"></div>
                 </div>
             </div>
         </div>
-    </main>
-
-    <footer class="bottom-bar">
-        <div class="minimized-tray left-tray" id="leftTray"></div>
-
-        <div class="radial-dock-container" id="radialContainer">
-            <button class="dock-item app-launcher-btn" id="appsLauncher">
-                <img id="apps-logo" alt="Apps" class="apps-icon-img" />
-            </button>
-            
-            <div class="radial-menu" id="radialMenu">
-                <button class="dock-item radial-item" data-app="google" style="--angle: -160deg; --distance: 110px;">Google</button>
-                <button class="dock-item radial-item" data-app="wikipedia" style="--angle: -120deg; --distance: 110px;">Wikipedia</button>
-                <button class="dock-item radial-item" data-app="calculator" style="--angle: -80deg; --distance: 110px;">Calculator</button>
-                <button class="dock-item radial-item" data-app="notes" style="--angle: -40deg; --distance: 110px;">Notes</button>
-                <button class="dock-item radial-item" data-app="finder" style="--angle: 0deg; --distance: 110px;">Finder</button>
-                <button class="dock-item radial-item" data-app="terminal" style="--angle: 40deg; --distance: 110px;">Terminal</button>
-            </div>
-        </div>
-
-        <div class="minimized-tray right-tray" id="rightTray"></div>
     </footer>
 
     <script type="module" src="./src/main.js"></script>

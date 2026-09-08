@@ -789,3 +789,253 @@ body {
 .cal-date.empty {
     opacity: 0;
 }
+.bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 0;
+    width: 100vw;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.mac-dock-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+}
+
+.mac-dock {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.dock-app {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.05s linear;
+    transform-origin: bottom center;
+}
+
+.app-icon {
+    font-size: 26px;
+    pointer-events: none;
+}
+
+.dock-app::after {
+    content: attr(data-title);
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.dock-app:hover::after {
+    opacity: 1;
+}
+
+.widgets-corner {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.hover-widget {
+    position: relative;
+}
+
+.widget-badge {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    padding: 0 14px;
+    height: 42px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.hover-widget:hover .widget-badge {
+    background: rgba(0, 243, 255, 0.25);
+    border-color: #00f3ff;
+}
+
+.popup-window {
+    position: absolute;
+    bottom: 54px;
+    right: 0;
+    width: 250px;
+    background: rgba(18, 22, 32, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    border-radius: 12px;
+    padding: 14px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    pointer-events: none;
+}
+
+.hover-widget:hover .popup-window {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cal-header button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #00f3ff;
+    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.cal-header button:hover {
+    background: #00f3ff;
+    color: #000;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+.cal-day-header {
+    font-weight: bold;
+    opacity: 0.6;
+    padding-bottom: 2px;
+    color: #00f3ff;
+}
+
+.cal-date {
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.cal-date:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.cal-date.today {
+    background: rgba(0, 243, 255, 0.2);
+    font-weight: bold;
+    color: #00f3ff;
+}
+
+.cal-date.selected {
+    border: 1px solid #00f3ff !important;
+    box-shadow: 0 0 6px rgba(0, 243, 255, 0.6);
+}
+
+.cal-date.empty {
+    opacity: 0;
+    pointer-events: none;
+}
+.hover-widget {
+    position: relative;
+}
+
+.popup-window {
+    transition: opacity 0.2s ease 0.5s, transform 0.2s ease 0.5s, visibility 0.2s ease 0.5s;
+}
+
+.hover-widget:hover .popup-window {
+    transition-delay: 0s;
+}
+
+.popup-window::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: transparent;
+}
+.dock-app {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.app-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    pointer-events: none;
+    border-radius: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.dock-app {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.app-icon-img {
+    border-radius: 12px !important;
+}

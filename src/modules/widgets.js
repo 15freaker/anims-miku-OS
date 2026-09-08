@@ -1,18 +1,43 @@
+let currentViewDate = new Date();
+let selectedDateStr = localStorage.getItem('miku_selected_date') || null;
+
 export function initWidgets() {
-    buildCalendar();
+    setupCalendarControls();
+    renderCalendar();
     fetchLiveWeather();
 }
 
-function buildCalendar() {
+function setupCalendarControls() {
+    const prevBtn = document.getElementById('cal-prev');
+    const nextBtn = document.getElementById('cal-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentViewDate.setMonth(currentViewDate.getMonth() - 1);
+            renderCalendar();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentViewDate.setMonth(currentViewDate.getMonth() + 1);
+            renderCalendar();
+        });
+    }
+}
+
+function renderCalendar() {
     const grid = document.getElementById('calendar-grid');
     const headerTitle = document.getElementById('cal-month-year');
     const badge = document.getElementById('calendarBadge');
 
     if (!grid || !headerTitle) return;
 
+    const year = currentViewDate.getFullYear();
+    const month = currentViewDate.getMonth();
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
 
     const monthNames = [
         "January", "February", "March", "April", "May", "June", 
@@ -20,7 +45,7 @@ function buildCalendar() {
     ];
 
     headerTitle.textContent = `${monthNames[month]} ${year}`;
-    if (badge) badge.textContent = `📅 ${monthNames[month].slice(0, 3)} ${now.getDate()}`;
+    if (badge) badge.textContent = `📅 ${monthNames[now.getMonth()].slice(0, 3)} ${now.getDate()}`;
 
     const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     grid.innerHTML = dayNames.map(d => `<div class="cal-day-header">${d}</div>`).join('');
@@ -33,9 +58,23 @@ function buildCalendar() {
     }
 
     for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === now.getDate() ? 'active' : '';
-        grid.innerHTML += `<div class="cal-date ${isToday}">${d}</div>`;
+        const dateKey = `${year}-${month + 1}-${d}`;
+        const isToday = (d === now.getDate() && month === now.getMonth() && year === now.getFullYear()) ? 'today' : '';
+        const isSelected = (selectedDateStr === dateKey) ? 'selected' : '';
+
+        grid.innerHTML += `<div class="cal-date ${isToday} ${isSelected}" data-date="${dateKey}">${d}</div>`;
     }
+
+    const dateEls = grid.querySelectorAll('.cal-date:not(.empty)');
+    dateEls.forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dateEls.forEach(d => d.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedDateStr = el.getAttribute('data-date');
+            localStorage.setItem('miku_selected_date', selectedDateStr);
+        });
+    });
 }
 
 async function fetchLiveWeather() {

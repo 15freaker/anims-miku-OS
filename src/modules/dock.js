@@ -3,35 +3,49 @@ import { openCalculator } from './apps/calculator.js';
 import { openNotesApp } from './apps/notes.js';
 import { openWikipediaApp } from './apps/wikipedia.js';
 import { openGoogleApp } from './apps/google.js';
-import appsLogoPath from '../assets/apps-miku-button.jpg';
 
 export function initDock() {
-    const appsLogoImg = document.getElementById('apps-logo');
-    if (appsLogoImg) {
-        appsLogoImg.src = appsLogoPath;
-    }
+    const dock = document.getElementById('macDock');
+    if (!dock) return;
 
-    const radialItems = document.querySelectorAll('.radial-item[data-app]');
+    const icons = dock.querySelectorAll('.dock-app');
 
-    radialItems.forEach((item) => {
-        item.addEventListener('click', () => {
-            const appType = item.getAttribute('data-app');
+    dock.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX;
 
-            if (appType === 'wikipedia') {
-                openWikipediaApp();
-            } else if (appType === 'google') {
-                openGoogleApp();
-            } else if (appType === 'calculator') {
-                openCalculator();
-            } else if (appType === 'notes') {
-                openNotesApp();
-            } else if (appType === 'finder') {
-                openWindow('Finder', '<p>Welcome to Finder. File system active.</p>');
-            } else if (appType === 'terminal') {
-                openWindow('Terminal', '<p style="font-family: monospace; color: #00ff66;">miku-os:~ user$ echo "Hello World"</p>');
-            } else if (appType === 'settings') {
-                openWindow('Settings', '<p>System Settings & Configuration.</p>');
+        icons.forEach(icon => {
+            const rect = icon.getBoundingClientRect();
+            const iconCenterX = rect.left + rect.width / 2;
+            const distance = Math.abs(mouseX - iconCenterX);
+
+            const maxDistance = 140;
+            const maxScale = 1.5;
+            const minScale = 1.0;
+
+            if (distance < maxDistance) {
+                const scale = maxScale - (distance / maxDistance) * (maxScale - minScale);
+                icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 18}px)`;
+            } else {
+                icon.style.transform = `scale(1) translateY(0px)`;
             }
+        });
+    });
+
+    dock.addEventListener('mouseleave', () => {
+        icons.forEach(icon => {
+            icon.style.transform = `scale(1) translateY(0px)`;
+        });
+    });
+
+    icons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            const app = icon.getAttribute('data-app');
+            if (app === 'google') openGoogleApp();
+            else if (app === 'wikipedia') openWikipediaApp();
+            else if (app === 'calculator') openCalculator();
+            else if (app === 'notes') openNotesApp();
+            else if (app === 'miku-folder') openWindow('miku-folder', '<p>Welcome to miku-folder.</p>');
+            else if (app === 'terminal') openWindow('Terminal', '<p style="color:#00ff66;">miku-os:~ user$</p>');
         });
     });
 }
