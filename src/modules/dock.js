@@ -3,6 +3,7 @@ import { openCalculator } from './apps/calculator.js';
 import { openNotesApp } from './apps/notes.js';
 import { openWikipediaApp } from './apps/wikipedia.js';
 import { openGoogleApp } from './apps/google.js';
+import { openTerminalApp } from './apps/terminal.js';
 
 export function initDock() {
     const dock = document.getElementById('macDock');
@@ -45,7 +46,7 @@ export function initDock() {
             else if (app === 'calculator') openCalculator();
             else if (app === 'notes') openNotesApp();
             else if (app === 'miku-folder') openWindow('miku-folder', '<p>Welcome to miku-folder.</p>');
-            else if (app === 'terminal') openWindow('Terminal', '<p style="color:#00ff66;">miku-os:~ user$</p>');
+            else if (app === 'terminal') openTerminalApp();
         });
     });
 }

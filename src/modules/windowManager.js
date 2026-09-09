@@ -1,16 +1,40 @@
 let activeZIndex = 100;
 let windowCounter = 0;
 
-export function openWindow(title, contentHTML, options = {}) {
-    const desktop = document.getElementById('desktop');
-    const windowId = `win-${Date.now()}-${++windowCounter}`;
+export function updateDockIndicator(appId, isOpen) {
+    if (!appId) return;
+    const dockIcon = document.querySelector(`.dock-app[data-app="${appId}"]`);
+    if (dockIcon) {
+        if (isOpen) {
+            dockIcon.classList.add('active');
+        } else {
+            dockIcon.classList.remove('active');
+        }
+    }
+}
 
+export function openWindow(title, contentHTML, options = {}) {
+    const desktop = document.getElementById('desktop') || document.body;
+    const appId = typeof options === 'string' ? options : (options.appId || title.toLowerCase().replace(/\s+/g, '-'));
+
+    let win = document.querySelector(`.os-window[data-app-id="${appId}"]`);
+
+    if (win) {
+        win.classList.remove('minimized');
+        win.style.display = 'flex';
+        win.style.zIndex = ++activeZIndex;
+        updateDockIndicator(appId, true);
+        return win;
+    }
+
+    const windowId = `win-${Date.now()}-${++windowCounter}`;
     const width = options.width ? `${options.width}px` : '520px';
     const height = options.height ? `${options.height}px` : '360px';
 
-    const win = document.createElement('div');
+    win = document.createElement('div');
     win.className = 'os-window';
     win.id = windowId;
+    win.setAttribute('data-app-id', appId);
     win.style.width = width;
     win.style.height = height;
     win.style.top = `${60 + Math.random() * 30}px`;
@@ -33,20 +57,18 @@ export function openWindow(title, contentHTML, options = {}) {
         win.style.zIndex = ++activeZIndex;
     });
 
-    // Close
     win.querySelector('.btn-close').addEventListener('click', (e) => {
         e.stopPropagation();
-        removeTrayPill(windowId);
+        updateDockIndicator(appId, false);
         win.remove();
     });
 
-    // Minimize -> Moves window into side tray
     win.querySelector('.btn-minimize').addEventListener('click', (e) => {
         e.stopPropagation();
-        minimizeToTray(win, title, windowId);
+        win.classList.add('minimized');
+        win.style.display = 'none';
     });
 
-    // Maximize
     win.querySelector('.btn-maximize').addEventListener('click', (e) => {
         e.stopPropagation();
         win.classList.toggle('maximized');
@@ -54,40 +76,15 @@ export function openWindow(title, contentHTML, options = {}) {
 
     makeDraggable(win);
     desktop.appendChild(win);
+    updateDockIndicator(appId, true);
+
+    return win;
 }
 
-function minimizeToTray(win, title, windowId) {
-    win.classList.add('minimized');
-    
-    // Choose tray side dynamically to keep dock balanced
-    const leftTray = document.getElementById('leftTray');
-    const rightTray = document.getElementById('rightTray');
-    const targetTray = leftTray.children.length <= rightTray.children.length ? leftTray : rightTray;
-
-    if (!document.getElementById(`pill-${windowId}`)) {
-        const pill = document.createElement('button');
-        pill.className = 'dock-item tray-pill';
-        pill.id = `pill-${windowId}`;
-        pill.textContent = title;
-
-        pill.addEventListener('click', () => {
-            win.classList.remove('minimized');
-            win.style.zIndex = ++activeZIndex;
-            pill.remove();
-        });
-
-        targetTray.appendChild(pill);
-    }
-}
-
-function removeTrayPill(windowId) {
-    const pill = document.getElementById(`pill-${windowId}`);
-    if (pill) pill.remove();
-}
-
-// Fast hardware-accelerated drag handler
 function makeDraggable(win) {
     const header = win.querySelector('.window-header');
+    if (!header) return;
+
     let isDragging = false;
     let startX = 0, startY = 0;
     let initialLeft = 0, initialTop = 0;
