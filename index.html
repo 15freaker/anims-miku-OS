@@ -35,12 +35,58 @@
 
     <main class="desktop os-ui-hidden" id="desktop">
         <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+
+        <!-- Square Desktop Music Widget with Playlist Menu -->
+        <div class="desktop-music-widget">
+            <div class="widget-top-bar">
+                <span class="more-options">⋮</span>
+            </div>
+
+            <div class="desktop-album-container">
+                <img src="./src/assets/icons/miku-music.png" alt="Miku Music" class="desktop-album-art" id="musicAlbumArt" />
+            </div>
+
+            <div class="track-header">
+                <span class="widget-track-title" id="trackTitle">Loading Tracks...</span>
+            </div>
+
+            <div class="widget-action-row">
+                <button class="icon-btn" id="playlistBtn" title="Playlist">🎵</button>
+                <button class="icon-btn" id="likeBtn" title="Like">♡</button>
+                <button class="icon-btn" id="addBtn" title="Add">+</button>
+            </div>
+
+            <div class="progress-container">
+                <input type="range" class="music-progress" id="musicProgress" value="0" min="0" max="100">
+                <div class="time-stamps">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalTime">0:00</span>
+                </div>
+            </div>
+
+            <div class="desktop-player-controls">
+                <button class="ctrl-btn" id="prevTrackBtn" title="Previous">⏮</button>
+                <button class="ctrl-btn play-main-btn" id="playPauseBtn" title="Play/Pause">▶</button>
+                <button class="ctrl-btn" id="nextTrackBtn" title="Next">⏭</button>
+            </div>
+
+            <!-- Slide-over Playlist Drawer -->
+            <div class="playlist-overlay" id="playlistOverlay">
+                <div class="playlist-header">
+                    <span>Playlist</span>
+                    <button id="closePlaylistBtn" class="close-playlist-btn">✕</button>
+                </div>
+                <div class="playlist-items" id="playlistItems">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <audio id="audioElement"></audio>
+        </div>
     </main>
 
     <footer class="bottom-bar os-ui-hidden" id="bottomBar">
         <div class="mac-dock-container">
-            <div class="side-tray" id="leftTray"></div>
-            
             <div class="mac-dock" id="macDock">
                 <button class="dock-app" data-app="google" data-title="Google">
                     <img src="./src/assets/icons/google.png" alt="Google" class="app-icon-img" />
@@ -61,8 +107,6 @@
                     <img src="./src/assets/icons/terminal.png" alt="Terminal" class="app-icon-img" />
                 </button>
             </div>
-
-            <div class="side-tray" id="rightTray"></div>
         </div>
 
         <div class="widgets-corner">
