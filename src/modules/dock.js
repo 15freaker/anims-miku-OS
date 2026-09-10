@@ -4,68 +4,305 @@ import { openWikipediaApp } from './apps/wikipedia.js';
 import { openGoogleApp } from './apps/google.js';
 import { openTerminalApp } from './apps/terminal.js';
 import { openMikuFolderApp } from './apps/mikuFolder.js';
+import {
+    openMikuStore,
+    getMikuStoreApps,
+    launchInstalledApp
+} from './apps/mikuStore.js';
 
 export function initDock() {
-    const dock = document.getElementById('macDock');
-    if (!dock) return;
+    const dock =
+        document.getElementById('macDock');
 
-    const icons = dock.querySelectorAll('.dock-app');
+    if (!dock) {
+        return;
+    }
 
-    // App launch router mapping
     const appLaunchers = {
-        'google': openGoogleApp,
-        'wikipedia': openWikipediaApp,
-        'calculator': openCalculator,
-        'notes': openNotesApp,
+        google: openGoogleApp,
+        wikipedia: openWikipediaApp,
+        calculator: openCalculator,
+        notes: openNotesApp,
         'miku-folder': openMikuFolderApp,
-        'terminal': openTerminalApp
+        terminal: openTerminalApp,
+        'miku-store': openMikuStore
     };
 
-    // Smooth macOS Magnification Effect
-    dock.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX;
-        const maxDistance = 140;
-        const maxScale = 1.4;
-        const minScale = 1.0;
+    loadInstalledApps(
+        dock,
+        appLaunchers
+    );
 
-        icons.forEach(icon => {
-            const rect = icon.getBoundingClientRect();
-            const iconCenterX = rect.left + rect.width / 2;
-            const distance = Math.abs(mouseX - iconCenterX);
+    setupDockEffects(
+        dock,
+        appLaunchers
+    );
 
-            if (distance < maxDistance) {
-                const scale = maxScale - (distance / maxDistance) * (maxScale - minScale);
-                icon.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 12}px)`;
-            } else {
-                icon.style.transform = `scale(1) translateY(0px)`;
-            }
+    window.addEventListener(
+        'mikuAppsChanged',
+        () => {
+            loadInstalledApps(
+                dock,
+                appLaunchers
+            );
+
+            setupClickHandlers(
+                dock,
+                appLaunchers
+            );
+        }
+    );
+}
+
+function getInstalledApps() {
+    try {
+        const installed =
+            JSON.parse(
+                localStorage.getItem(
+                    'miku_installed_apps'
+                )
+            );
+
+        return Array.isArray(installed)
+            ? installed
+            : [];
+    } catch {
+        return [];
+    }
+}
+
+function loadInstalledApps(
+    dock,
+    appLaunchers
+) {
+    const installed =
+        getInstalledApps();
+
+    const storeApps =
+        getMikuStoreApps();
+
+    dock
+        .querySelectorAll(
+            '.miku-installed-app'
+        )
+        .forEach(icon => {
+            icon.remove();
         });
+
+    installed.forEach(appId => {
+        const app =
+            storeApps.find(
+                item => item.id === appId
+            );
+
+        if (!app) {
+            return;
+        }
+
+        if (
+            dock.querySelector(
+                `[data-app="${app.id}"]`
+            )
+        ) {
+            return;
+        }
+
+        const icon =
+            document.createElement('div');
+
+        icon.className =
+            'dock-app miku-installed-app';
+
+        icon.setAttribute(
+            'data-app',
+            app.id
+        );
+
+        icon.setAttribute(
+            'title',
+            app.name
+        );
+
+        icon.innerHTML = `
+            <img
+                src="${app.icon}"
+                alt="${app.name}"
+            >
+        `;
+
+        dock.appendChild(icon);
     });
 
-    dock.addEventListener('mouseleave', () => {
-        icons.forEach(icon => {
-            icon.style.transform = `scale(1) translateY(0px)`;
-        });
-    });
+    setupClickHandlers(
+        dock,
+        appLaunchers
+    );
+}
 
-    // App Launch Click Handlers with bounce feedback
+function setupClickHandlers(
+    dock,
+    appLaunchers
+) {
+    const icons =
+        dock.querySelectorAll(
+            '.dock-app'
+        );
+
     icons.forEach(icon => {
-        icon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const app = icon.getAttribute('data-app');
+        if (
+            icon.dataset.dockReady ===
+            'true'
+        ) {
+            return;
+        }
 
-            if (app && appLaunchers[app]) {
-                // Click bounce animation feedback
-                icon.style.transition = 'transform 0.15s ease';
-                icon.style.transform = 'scale(0.85) translateY(0px)';
+        icon.dataset.dockReady =
+            'true';
+
+        icon.addEventListener(
+            'click',
+            event => {
+                event.stopPropagation();
+
+                const appId =
+                    icon.getAttribute(
+                        'data-app'
+                    );
+
+                if (!appId) {
+                    return;
+                }
+
+                icon.style.transition =
+                    'transform 0.15s ease';
+
+                icon.style.transform =
+                    'scale(0.85) translateY(0px)';
 
                 setTimeout(() => {
-                    icon.style.transition = '';
-                    appLaunchers[app]();
+                    icon.style.transition =
+                        '';
+
+                    icon.style.transform =
+                        '';
+
+                    if (
+                        appLaunchers[appId]
+                    ) {
+                        appLaunchers[
+                            appId
+                        ]();
+
+                        return;
+                    }
+
+                    const installed =
+                        getInstalledApps();
+
+                    if (
+                        installed.includes(
+                            appId
+                        )
+                    ) {
+                        launchInstalledApp(
+                            appId
+                        );
+                    }
                 }, 120);
-            } else {
-                console.warn(`No launcher defined for app: "${app}"`);
             }
-        });
+        );
     });
+}
+
+function setupDockEffects(
+    dock,
+    appLaunchers
+) {
+    if (
+        dock.dataset.effectsReady ===
+        'true'
+    ) {
+        setupClickHandlers(
+            dock,
+            appLaunchers
+        );
+
+        return;
+    }
+
+    dock.dataset.effectsReady =
+        'true';
+
+    dock.addEventListener(
+        'mousemove',
+        event => {
+            const icons =
+                dock.querySelectorAll(
+                    '.dock-app'
+                );
+
+            const mouseX =
+                event.clientX;
+
+            const maxDistance = 140;
+            const maxScale = 1.4;
+            const minScale = 1;
+
+            icons.forEach(icon => {
+                const rect =
+                    icon.getBoundingClientRect();
+
+                const centerX =
+                    rect.left +
+                    rect.width / 2;
+
+                const distance =
+                    Math.abs(
+                        mouseX -
+                        centerX
+                    );
+
+                if (
+                    distance <
+                    maxDistance
+                ) {
+                    const scale =
+                        maxScale -
+                        (
+                            distance /
+                            maxDistance
+                        ) *
+                        (
+                            maxScale -
+                            minScale
+                        );
+
+                    icon.style.transform =
+                        `scale(${scale}) translateY(-${(scale - 1) * 12}px)`;
+                } else {
+                    icon.style.transform =
+                        'scale(1) translateY(0px)';
+                }
+            });
+        }
+    );
+
+    dock.addEventListener(
+        'mouseleave',
+        () => {
+            dock
+                .querySelectorAll(
+                    '.dock-app'
+                )
+                .forEach(icon => {
+                    icon.style.transform =
+                        'scale(1) translateY(0px)';
+                });
+        }
+    );
+
+    setupClickHandlers(
+        dock,
+        appLaunchers
+    );
 }

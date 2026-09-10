@@ -8,8 +8,6 @@ let fitAddonInstance = null;
 export function openTerminalApp() {
     const appId = 'terminal';
     const windowEl = document.getElementById(`window-${appId}`);
-
-    // If window already exists, un-hide it and re-fit canvas without re-initializing
     if (windowEl) {
         openWindow('Terminal', '', appId);
         setTimeout(() => {

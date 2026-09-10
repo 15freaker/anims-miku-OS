@@ -7,17 +7,18 @@
     <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-
     <div id="boot-screen">
         <div class="boot-box">
             <div class="boot-header">
                 <span>Miku-OS Kernel v1.0.0 (tty1)</span>
                 <span class="status-indicator">BOOTING</span>
             </div>
+
             <div class="boot-content">
                 <div class="boot-gif-container">
-                    <img alt="Miku Boot" class="miku-gif" />
+                    <img alt="Miku Boot" class="miku-gif">
                 </div>
+
                 <div class="boot-terminal" id="boot-terminal"></div>
             </div>
         </div>
@@ -27,6 +28,7 @@
         <div class="top-bar-left">
             <span class="os-title">Miku-OS</span>
         </div>
+
         <div class="top-bar-right">
             <span id="date"></span>
             <span id="time"></span>
@@ -34,30 +36,72 @@
     </header>
 
     <main class="desktop os-ui-hidden" id="desktop">
-        <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+        <input
+            type="file"
+            id="bg-upload"
+            accept="image/*"
+            style="display:none"
+        >
 
-        <!-- Square Desktop Music Widget with Playlist Menu -->
         <div class="desktop-music-widget">
             <div class="widget-top-bar">
                 <span class="more-options">⋮</span>
             </div>
 
             <div class="desktop-album-container">
-                <img src="./src/assets/icons/miku-music.png" alt="Miku Music" class="desktop-album-art" id="musicAlbumArt" />
+                <img
+                    src="./src/assets/icons/miku-music.png"
+                    alt="Miku Music"
+                    class="desktop-album-art"
+                    id="musicAlbumArt"
+                >
             </div>
 
             <div class="track-header">
-                <span class="widget-track-title" id="trackTitle">Loading Tracks...</span>
+                <span
+                    class="widget-track-title"
+                    id="trackTitle"
+                >
+                    Loading Tracks...
+                </span>
             </div>
 
             <div class="widget-action-row">
-                <button class="icon-btn" id="playlistBtn" title="Playlist">🎵</button>
-                <button class="icon-btn" id="likeBtn" title="Like">♡</button>
-                <button class="icon-btn" id="addBtn" title="Add">+</button>
+                <button
+                    class="icon-btn"
+                    id="playlistBtn"
+                    title="Playlist"
+                >
+                    🎵
+                </button>
+
+                <button
+                    class="icon-btn"
+                    id="likeBtn"
+                    title="Like"
+                >
+                    ♡
+                </button>
+
+                <button
+                    class="icon-btn"
+                    id="addBtn"
+                    title="Add"
+                >
+                    +
+                </button>
             </div>
 
             <div class="progress-container">
-                <input type="range" class="music-progress" id="musicProgress" value="0" min="0" max="100">
+                <input
+                    type="range"
+                    class="music-progress"
+                    id="musicProgress"
+                    value="0"
+                    min="0"
+                    max="100"
+                >
+
                 <div class="time-stamps">
                     <span id="currentTime">0:00</span>
                     <span id="totalTime">0:00</span>
@@ -65,83 +109,232 @@
             </div>
 
             <div class="desktop-player-controls">
-                <button class="ctrl-btn" id="prevTrackBtn" title="Previous">⏮</button>
-                <button class="ctrl-btn play-main-btn" id="playPauseBtn" title="Play/Pause">▶</button>
-                <button class="ctrl-btn" id="nextTrackBtn" title="Next">⏭</button>
+                <button
+                    class="ctrl-btn"
+                    id="prevTrackBtn"
+                    title="Previous"
+                >
+                    ⏮
+                </button>
+
+                <button
+                    class="ctrl-btn play-main-btn"
+                    id="playPauseBtn"
+                    title="Play/Pause"
+                >
+                    ▶
+                </button>
+
+                <button
+                    class="ctrl-btn"
+                    id="nextTrackBtn"
+                    title="Next"
+                >
+                    ⏭
+                </button>
             </div>
 
-            <!-- Slide-over Playlist Drawer -->
-            <div class="playlist-overlay" id="playlistOverlay">
+            <div
+                class="playlist-overlay"
+                id="playlistOverlay"
+            >
                 <div class="playlist-header">
                     <span>Playlist</span>
-                    <button id="closePlaylistBtn" class="close-playlist-btn">✕</button>
+
+                    <button
+                        id="closePlaylistBtn"
+                        class="close-playlist-btn"
+                    >
+                        ✕
+                    </button>
                 </div>
-                <div class="playlist-items" id="playlistItems">
-                    <!-- Populated dynamically -->
-                </div>
+
+                <div
+                    class="playlist-items"
+                    id="playlistItems"
+                ></div>
             </div>
 
             <audio id="audioElement"></audio>
         </div>
     </main>
 
-    <footer class="bottom-bar os-ui-hidden" id="bottomBar">
+    <footer
+        class="bottom-bar os-ui-hidden"
+        id="bottomBar"
+    >
         <div class="mac-dock-container">
-            <div class="mac-dock" id="macDock">
-                <button class="dock-app" data-app="google" data-title="Google">
-                    <img src="./src/assets/icons/google.png" alt="Google" class="app-icon-img" />
+            <div
+                class="mac-dock"
+                id="macDock"
+            >
+                <button
+                    class="dock-app"
+                    data-app="google"
+                    data-title="Google"
+                >
+                    <img
+                        src="./src/assets/icons/google.png"
+                        alt="Google"
+                        class="app-icon-img"
+                    >
                 </button>
-                <button class="dock-app" data-app="wikipedia" data-title="Wikipedia">
-                    <img src="./src/assets/icons/wikipedia.png" alt="Wikipedia" class="app-icon-img" />
+
+                <button
+                    class="dock-app"
+                    data-app="wikipedia"
+                    data-title="Wikipedia"
+                >
+                    <img
+                        src="./src/assets/icons/wikipedia.png"
+                        alt="Wikipedia"
+                        class="app-icon-img"
+                    >
                 </button>
-                <button class="dock-app" data-app="calculator" data-title="Calculator">
-                    <img src="./src/assets/icons/calculator.png" alt="Calculator" class="app-icon-img" />
+
+                <button
+                    class="dock-app"
+                    data-app="calculator"
+                    data-title="Calculator"
+                >
+                    <img
+                        src="./src/assets/icons/calculator.png"
+                        alt="Calculator"
+                        class="app-icon-img"
+                    >
                 </button>
-                <button class="dock-app" data-app="notes" data-title="Notes">
-                    <img src="./src/assets/icons/notes.png" alt="Notes" class="app-icon-img" />
+
+                <button
+                    class="dock-app"
+                    data-app="notes"
+                    data-title="Notes"
+                >
+                    <img
+                        src="./src/assets/icons/notes.png"
+                        alt="Notes"
+                        class="app-icon-img"
+                    >
                 </button>
-                <button class="dock-app" data-app="miku-folder" data-title="Miku Folder">
-                    <img src="./src/assets/icons/miku-folder.png" alt="miku-folder" class="app-icon-img" />
+
+                <button
+                    class="dock-app"
+                    data-app="miku-folder"
+                    data-title="Miku Folder"
+                >
+                    <img
+                        src="./src/assets/icons/miku-folder.png"
+                        alt="miku-folder"
+                        class="app-icon-img"
+                    >
                 </button>
-                <button class="dock-app" data-app="terminal" data-title="Terminal">
-                    <img src="./src/assets/icons/terminal.png" alt="Terminal" class="app-icon-img" />
+
+                <button
+                    class="dock-app"
+                    data-app="terminal"
+                    data-title="Terminal"
+                >
+                    <img
+                        src="./src/assets/icons/terminal.png"
+                        alt="Terminal"
+                        class="app-icon-img"
+                    >
+                </button>
+
+                <button
+                    class="dock-app"
+                    data-app="miku-store"
+                    data-title="Miku Store"
+                >
+                    <img
+                        src="./src/assets/icon/miku-store.png"
+                        alt="Miku Store"
+                        class="app-icon-img"
+                    >
                 </button>
             </div>
         </div>
 
         <div class="widgets-corner">
             <div class="hover-widget weather-trigger">
-                <div class="widget-badge" id="weatherBadge">🌤️ --°C</div>
+                <div
+                    class="widget-badge"
+                    id="weatherBadge"
+                >
+                    🌤️ --°C
+                </div>
+
                 <div class="popup-window">
                     <div class="popup-header">
                         <h3>Current Weather</h3>
-                        <span class="location">Patna, Bihar</span>
+                        <span class="location">
+                            Patna, Bihar
+                        </span>
                     </div>
+
                     <div class="weather-body">
-                        <div class="temp-display" id="weatherTemp">--°C</div>
-                        <div class="condition" id="weatherCondition">Syncing...</div>
+                        <div
+                            class="temp-display"
+                            id="weatherTemp"
+                        >
+                            --°C
+                        </div>
+
+                        <div
+                            class="condition"
+                            id="weatherCondition"
+                        >
+                            Syncing...
+                        </div>
+
                         <div class="details">
-                            <div id="weatherHumidity">Humidity: --%</div>
-                            <div id="weatherWind">Wind: -- km/h</div>
+                            <div id="weatherHumidity">
+                                Humidity: --%
+                            </div>
+
+                            <div id="weatherWind">
+                                Wind: -- km/h
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="hover-widget calendar-trigger">
-                <div class="widget-badge" id="calendarBadge">📅 Today</div>
+                <div
+                    class="widget-badge"
+                    id="calendarBadge"
+                >
+                    📅 Today
+                </div>
+
                 <div class="popup-window cal-popup">
                     <div class="popup-header cal-header">
-                        <button id="cal-prev">&lt;</button>
-                        <h3 id="cal-month-year">Calendar</h3>
-                        <button id="cal-next">&gt;</button>
+                        <button id="cal-prev">
+                            &lt;
+                        </button>
+
+                        <h3 id="cal-month-year">
+                            Calendar
+                        </h3>
+
+                        <button id="cal-next">
+                            &gt;
+                        </button>
                     </div>
-                    <div class="calendar-grid" id="calendar-grid"></div>
+
+                    <div
+                        class="calendar-grid"
+                        id="calendar-grid"
+                    ></div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script type="module" src="./src/main.js"></script>
+    <script
+        type="module"
+        src="./src/main.js"
+    ></script>
 </body>
 </html>
+```

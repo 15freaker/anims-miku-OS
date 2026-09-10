@@ -32,7 +32,6 @@ export function openNotesApp() {
         let selectedColor = '#2b394a';
         renderNotes();
 
-        // Color selection handling
         document.querySelectorAll('.color-dot').forEach(dot => {
             dot.addEventListener('click', () => {
                 document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
@@ -41,7 +40,6 @@ export function openNotesApp() {
             });
         });
 
-        // Add Note button
         document.getElementById('addNoteBtn')?.addEventListener('click', () => {
             const titleInput = document.getElementById('noteTitleInput');
             const bodyInput = document.getElementById('noteBodyInput');
@@ -90,7 +88,6 @@ function renderNotes() {
             </div>
         `;
 
-        // Update title and body on input
         card.querySelector('.note-card-title').addEventListener('input', (e) => {
             note.title = e.target.value;
             saveNotes();
@@ -101,14 +98,12 @@ function renderNotes() {
             saveNotes();
         });
 
-        // Pin/Unpin handler
         card.querySelector('.note-pin-btn').addEventListener('click', () => {
             note.pinned = !note.pinned;
             saveNotes();
             renderNotes();
         });
 
-        // Delete handler
         card.querySelector('.note-delete-btn').addEventListener('click', () => {
             notes = notes.filter(n => n.id !== note.id);
             saveNotes();
