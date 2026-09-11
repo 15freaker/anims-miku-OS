@@ -1,62 +1,192 @@
 import { openWindow } from './windowManager.js';
 
-const wallpaperModules = import.meta.glob('../assets/walpaper-*.*', { eager: true, as: 'url' });
+const wallpaperModules = import.meta.glob(
+    '../assets/wallpaper*.png',
+    {
+        eager: true,
+        as: 'url'
+    }
+);
+
 const wallpapers = Object.values(wallpaperModules);
 
-export function initWallpaper() {
-    const bgBtn = document.getElementById('change-bg-btn');
-    const bgUpload = document.getElementById('bg-upload');
+let customWallpaperUrl = null;
 
-    if (wallpapers.length > 0) {
-        document.body.style.backgroundImage = `url('${wallpapers[0]}')`;
+export function initWallpaper() {
+    const bgUpload =
+        document.getElementById('bg-upload');
+
+    const savedWallpaper =
+        localStorage.getItem(
+            'miku_wallpaper'
+        );
+
+    if (savedWallpaper) {
+        document.body.style.backgroundImage =
+            `url("${savedWallpaper}")`;
+    } else if (wallpapers.length > 0) {
+        document.body.style.backgroundImage =
+            `url("${wallpapers[0]}")`;
     }
 
-    bgBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openWallpaperPicker();
-    });
+    bgUpload?.addEventListener(
+        'change',
+        event => {
+            const file =
+                event.target.files?.[0];
 
-    bgBtn?.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        bgUpload?.click();
-    });
+            if (!file) {
+                return;
+            }
 
-    bgUpload?.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            document.body.style.backgroundImage = `url('${imageUrl}')`;
+            if (customWallpaperUrl) {
+                URL.revokeObjectURL(
+                    customWallpaperUrl
+                );
+            }
+
+            customWallpaperUrl =
+                URL.createObjectURL(file);
+
+            document.body.style.backgroundImage =
+                `url("${customWallpaperUrl}")`;
         }
-    });
+    );
 }
 
-function openWallpaperPicker() {
-    let gridHTML = '<div class="wallpaper-grid">';
-    
-    wallpapers.forEach((url, index) => {
-        gridHTML += `
-            <div class="wallpaper-card" data-url="${url}">
-                <img src="${url}" alt="Wallpaper ${index + 1}" />
-                <span>Wallpaper ${index + 1}</span>
-            </div>
-        `;
-    });
-    
-    gridHTML += '</div>';
+export function openWallpaperApp() {
+    const container =
+        document.createElement('div');
 
-    openWindow('Wallpaper Gallery', gridHTML, { width: 520, height: 380 });
+    container.className =
+        'wallpaper-app';
 
-    setTimeout(() => {
-        const cards = document.querySelectorAll('.wallpaper-card');
-        cards.forEach((card) => {
-            card.addEventListener('click', () => {
-                const selectedUrl = card.getAttribute('data-url');
-                document.body.style.backgroundImage = `url('${selectedUrl}')`;
-                
-                cards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-            });
-        });
-    }, 50);
+    const title =
+        document.createElement('div');
+
+    title.className =
+        'wallpaper-app-title';
+
+    title.textContent =
+        'Choose your wallpaper';
+
+    const grid =
+        document.createElement('div');
+
+    grid.className =
+        'wallpaper-grid';
+
+    wallpapers.forEach(
+        (url, index) => {
+            const card =
+                document.createElement('button');
+
+            card.type = 'button';
+
+            card.className =
+                'wallpaper-card';
+
+            const image =
+                document.createElement('img');
+
+            image.src = url;
+
+            image.alt =
+                `Wallpaper ${index + 1}`;
+
+            const name =
+                document.createElement('span');
+
+            name.textContent =
+                `Wallpaper ${index + 1}`;
+
+            card.appendChild(
+                image
+            );
+
+            card.appendChild(
+                name
+            );
+
+            card.addEventListener(
+                'click',
+                () => {
+                    setWallpaper(url);
+
+                    grid
+                        .querySelectorAll(
+                            '.wallpaper-card'
+                        )
+                        .forEach(
+                            item => {
+                                item.classList.remove(
+                                    'active'
+                                );
+                            }
+                        );
+
+                    card.classList.add(
+                        'active'
+                    );
+                }
+            );
+
+            grid.appendChild(
+                card
+            );
+        }
+    );
+
+    const uploadButton =
+        document.createElement('button');
+
+    uploadButton.type =
+        'button';
+
+    uploadButton.className =
+        'wallpaper-upload-btn';
+
+    uploadButton.textContent =
+        'Choose image from computer';
+
+    uploadButton.addEventListener(
+        'click',
+        () => {
+            document
+                .getElementById('bg-upload')
+                ?.click();
+        }
+    );
+
+    container.appendChild(
+        title
+    );
+
+    container.appendChild(
+        grid
+    );
+
+    container.appendChild(
+        uploadButton
+    );
+
+    openWindow(
+        'Wallpaper',
+        container,
+        {
+            appId: 'wallpaper',
+            width: 620,
+            height: 480
+        }
+    );
+}
+
+function setWallpaper(url) {
+    document.body.style.backgroundImage =
+        `url("${url}")`;
+
+    localStorage.setItem(
+        'miku_wallpaper',
+        url
+    );
 }

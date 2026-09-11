@@ -198,36 +198,67 @@ function setupClickHandlers(
                 icon.style.transform =
                     'scale(0.85) translateY(0px)';
 
-                setTimeout(() => {
-                    icon.style.transition =
-                        '';
+                setTimeout(
+                    async () => {
+                        icon.style.transition =
+                            '';
 
-                    icon.style.transform =
-                        '';
+                        icon.style.transform =
+                            '';
 
-                    if (
-                        appLaunchers[appId]
-                    ) {
-                        appLaunchers[
-                            appId
-                        ]();
+                        if (
+                            appId ===
+                            'wallpaper'
+                        ) {
+                            try {
+                                const module =
+                                    await import(
+                                        './wallpaper.js'
+                                    );
 
-                        return;
-                    }
+                                if (
+                                    typeof module
+                                        .openWallpaperApp ===
+                                    'function'
+                                ) {
+                                    module
+                                        .openWallpaperApp();
+                                }
+                            } catch (error) {
+                                console.error(
+                                    'Wallpaper failed to open:',
+                                    error
+                                );
+                            }
 
-                    const installed =
-                        getInstalledApps();
+                            return;
+                        }
 
-                    if (
-                        installed.includes(
-                            appId
-                        )
-                    ) {
-                        launchInstalledApp(
-                            appId
-                        );
-                    }
-                }, 120);
+                        if (
+                            appLaunchers[appId]
+                        ) {
+                            appLaunchers[
+                                appId
+                            ]();
+
+                            return;
+                        }
+
+                        const installed =
+                            getInstalledApps();
+
+                        if (
+                            installed.includes(
+                                appId
+                            )
+                        ) {
+                            launchInstalledApp(
+                                appId
+                            );
+                        }
+                    },
+                    120
+                );
             }
         );
     });
