@@ -1,7 +1,10 @@
 import { openWindow } from '../windowManager.js';
 
 const ICON = name =>
-    `https://api.iconify.design/${name}.svg?height=auto`;
+    new URL(
+        `../../assets/icons/${name}.png`,
+        import.meta.url
+    ).href;
 
 const APPS = [
     {
@@ -9,7 +12,7 @@ const APPS = [
         name: 'Text Editor',
         description: 'Write and edit plain text.',
         category: 'Productivity',
-        icon: ICON('mdi:text-box-edit-outline'),
+        icon: ICON('notes'),
         open: openTextEditor
     },
     {
@@ -17,7 +20,7 @@ const APPS = [
         name: 'Paint',
         description: 'Draw directly inside Miku-OS.',
         category: 'Creative',
-        icon: ICON('mdi:palette-outline'),
+        icon: ICON('paint'),
         open: openPaint
     },
     {
@@ -25,7 +28,7 @@ const APPS = [
         name: 'Calculator',
         description: 'A simple scientific calculator.',
         category: 'Utilities',
-        icon: ICON('mdi:calculator-variant-outline'),
+        icon: ICON('calculator'),
         open: openCalculator
     },
     {
@@ -33,7 +36,7 @@ const APPS = [
         name: 'Color Picker',
         description: 'Choose colors and copy their codes.',
         category: 'Creative',
-        icon: ICON('mdi:eyedropper-variant'),
+        icon: ICON('color-pick'),
         open: openColorPicker
     },
     {
@@ -41,7 +44,7 @@ const APPS = [
         name: 'Code Playground',
         description: 'Write HTML, CSS and JavaScript.',
         category: 'Development',
-        icon: ICON('mdi:code-braces-box'),
+        icon: ICON('code-ground'),
         open: openCodePlayground
     },
     {
@@ -49,7 +52,7 @@ const APPS = [
         name: 'JSON Tool',
         description: 'Format and inspect JSON data.',
         category: 'Development',
-        icon: ICON('mdi:code-json'),
+        icon: ICON('json-view'),
         open: openJSONTool
     },
     {
@@ -57,7 +60,7 @@ const APPS = [
         name: 'Markdown',
         description: 'Write Markdown and preview it.',
         category: 'Productivity',
-        icon: ICON('mdi:language-markdown-outline'),
+        icon: ICON('markdown'),
         open: openMarkdown
     },
     {
@@ -65,7 +68,7 @@ const APPS = [
         name: 'Image Viewer',
         description: 'Preview images from your computer.',
         category: 'Media',
-        icon: ICON('mdi:image-multiple-outline'),
+        icon: ICON('photos'),
         open: openImageViewer
     },
     {
@@ -73,7 +76,7 @@ const APPS = [
         name: 'Stopwatch',
         description: 'Track time with a stopwatch.',
         category: 'Utilities',
-        icon: ICON('mdi:timer-outline'),
+        icon: ICON('timer'),
         open: openStopwatch
     },
     {
@@ -81,7 +84,7 @@ const APPS = [
         name: 'Timer',
         description: 'Set a countdown timer.',
         category: 'Utilities',
-        icon: ICON('mdi:timer-sand'),
+        icon: ICON('timer'),
         open: openTimer
     },
     {
@@ -89,7 +92,7 @@ const APPS = [
         name: 'Unit Converter',
         description: 'Convert common measurements.',
         category: 'Utilities',
-        icon: ICON('mdi:swap-horizontal'),
+        icon: ICON('unitconverter'),
         open: openUnitConverter
     },
     {
@@ -97,7 +100,7 @@ const APPS = [
         name: 'QR Generator',
         description: 'Create a QR code from text.',
         category: 'Utilities',
-        icon: ICON('mdi:qrcode'),
+        icon: ICON('qr'),
         open: openQRGenerator
     },
     {
@@ -105,7 +108,7 @@ const APPS = [
         name: 'System Info',
         description: 'View information about Miku-OS.',
         category: 'System',
-        icon: ICON('mdi:monitor-dashboard'),
+        icon: ICON('settings'),
         open: openSystemInfo
     },
     {
@@ -113,7 +116,7 @@ const APPS = [
         name: 'Music Player',
         description: 'Play audio files inside Miku-OS.',
         category: 'Media',
-        icon: ICON('mdi:music-box-multiple-outline'),
+        icon: ICON('music'),
         open: openMusicPlayer
     }
 ];

@@ -113,6 +113,15 @@ function loadInstalledApps(
         icon.className =
             'dock-app miku-installed-app';
 
+        icon.style.width = '52px';
+        icon.style.height = '52px';
+        icon.style.display = 'flex';
+        icon.style.alignItems = 'center';
+        icon.style.justifyContent = 'center';
+        icon.style.flexShrink = '0';
+        icon.style.borderRadius = '13px';
+        icon.style.overflow = 'hidden';
+
         icon.setAttribute(
             'data-app',
             app.id
@@ -127,6 +136,16 @@ function loadInstalledApps(
             <img
                 src="${app.icon}"
                 alt="${app.name}"
+                style="
+                    width:42px;
+                    height:42px;
+                    max-width:42px;
+                    max-height:42px;
+                    object-fit:contain;
+                    display:block;
+                    flex-shrink:0;
+                    border-radius:10px;
+                "
             >
         `;
 
